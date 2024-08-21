@@ -4,6 +4,7 @@ import config
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from logger import logger
+import graphql
 
 
 def prepare_issue_comment(issue: dict, assignees: dict):
@@ -18,7 +19,7 @@ def prepare_issue_comment(issue: dict, assignees: dict):
     else:
         logger.info(f'No assignees found for issue #{issue["number"]}')
 
-    comment += f'The status changes to "QA Testing" Please proceed with the necessary testing.'
+    comment += f'This issue is now in QA Testing. Please proceed with the necessary testing.'
     logger.info(f'Issue {issue["title"]} | {comment}')
 
     return comment
@@ -39,7 +40,7 @@ def prepare_issue_email_message(issue, assignees):
         logger.info(f'No assignees found for issue #{issue["number"]}')
 
     message = f'Assignees: {_assignees}' \
-              f'<br>The status changes to "QA Testing" Please proceed with the necessary testing.' \
+              f'<br>This issue is now in QA Testing. Please proceed with the necessary testing.' \
               f'<br><br>{issue["url"]}'
 
     return [subject, message, mail_to]
@@ -68,3 +69,12 @@ def send_email(from_email: str, to_email: list, subject: str, html_body: str):
     smtp_server.sendmail(from_email, to_email, text)
 
     smtp_server.quit()
+
+
+def check_comment_exists(issue_id, comment_text):
+    """Check if the comment already exists on the issue."""
+    comments = graphql.get_issue_comments(issue_id)
+    for comment in comments:
+        if comment_text in comment.get('body', ''):
+            return True
+    return False
