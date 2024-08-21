@@ -1,0 +1,83 @@
+name: Access Request
+description: Access/Termination request (All sections marked with asterix must be completed)
+title: 'New Access / Termination Request'
+labels: "access-requests"
+assignees: "tantoniou,yroibu"
+body:
+  - type: textarea
+    id: related-issues
+    attributes:
+      label: Related issues 
+      description: Please use the '-' symbol along with '#' symbol and write the number of the issue which is related to the current issue
+      placeholder: '- #[Issue number] e.g - #112'
+    validations:
+      required: false
+      
+  - type: dropdown
+    id: system-feature
+    attributes:
+      label: Select for which system is your request *
+      options:
+        - 3De Pocket
+        - AWS
+        - BrowserStack
+        - Courses App
+        - CRM System
+        - fixer.io
+        - GitHub
+        - Google Adwords
+        - Google Analytics courses.unicaf.org
+        - Google Analytics Main account
+        - Gsuite @unicaf.org (Emails,hangounts and etc)
+        - Landing Pages
+        - matomo.unicaf.org
+        - Moodle
+        - Netsuite
+        - proto.io
+        - Rundeck
+        - Sendinblue
+        - Slack
+        - SurveyMonkey
+        - Turnitin
+        - UNISIS System
+        - Vimeo video hosting
+        - VPN
+        - Wordpress unicafuniversity.com
+        - Wordpress unicaf.org
+    
+
+  - type: textarea
+    id: access-request-description
+    attributes:
+      label: Detailed Permissions per System *
+      description: Please describe what sort of access needs to be provided in each on the systems. Any requests without descriptions of these permission capabilities gets lowest priority
+      placeholder: 
+    validations:
+      required: true
+
+  - type: textarea
+    id: access-request-cause
+    attributes:
+      label: Describe the cause *
+      description: Describe the way how the access provided is intended to be used, or the cause of the termination of the access
+      placeholder: 
+    validations:
+      required: true
+
+  - type: input
+    id: originator
+    attributes:
+      label: Originator(s) of idea *
+      description: Name of the person who have requested this access/termination
+      placeholder: 
+    validations:
+      required: true
+
+  - type: textarea
+    id: access-comments
+    attributes:
+      label: Comments
+      description: Here you could add any additional comments to the request
+      placeholder: 
+    validations:
+      required: false
