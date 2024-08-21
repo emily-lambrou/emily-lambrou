@@ -1,0 +1,29 @@
+name: Testing Status
+
+# Runs every 23 hours
+on:
+  schedule:
+    - cron: '0 */23 * * *'
+  workflow_dispatch:
+
+jobs:
+  check_status:
+    runs-on: self-hosted
+
+    steps:
+      # Checkout the code to be used by runner
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+
+      # Check for status changes
+      - name: Check for status changes
+        uses: emily-lambrou/status_changes_to_qatesting@v1.1
+        with:
+          dry_run: ${{ vars.DRY_RUN }}           
+          gh_token: ${{ secrets.GH_TOKEN }}      
+          project_number: ${{ vars.PROJECT_NUMBER }} 
+          enterprise_github: 'True'
+          repository_owner_type: organization
+  
+        
