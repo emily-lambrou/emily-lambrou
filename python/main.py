@@ -70,7 +70,7 @@ def notify_change_status():
         # Check if the current status is "QA Testing"
         if current_status == 'QA Testing':
             # Prepare the comment text
-            comment_text = "This issue is now in QA Testing. Please proceed with the necessary testing."
+            comment_text = "This issue is ready for testing. Please proceed accordingly."
             
             # Check if the comment already exists
             if not utils.check_comment_exists(issue_id, comment_text):
@@ -84,22 +84,7 @@ def notify_change_status():
                         graphql.add_issue_comment(issue_id, comment)
                     
                     logger.info(f'Comment added to issue #{issue_content.get("number")} ({issue_id})')
-
-                elif config.notification_type == 'email':
-                    subject, message, to = utils.prepare_issue_email_message(
-                        issue=issue_content,
-                        assignees=issue_content.get('assignees', {}).get('nodes', [])
-                    )
-
-                    if not config.dry_run:
-                        utils.send_email(
-                            from_email=config.smtp_from_email,
-                            to_email=to,
-                            subject=subject,
-                            html_body=message
-                        )
-
-                        logger.info(f'Email sent to {to} for issue #{issue_content.get("number")}')
+         
 
 def main():
     logger.info('Process started...')
